@@ -1,0 +1,26 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+black = "==18.9b0"
+flake8 = "*"
+
+[packages]
+aiohttp-requests = "*"
+requests = "*"
+pytest = "*"
+pytest-cov ="*"
+codecov = "*"
+python-dotenv = "*"
+fastapi = "*"
+fastapi-restful = "*"
+uvicorn = "*"
+pytest-asyncio = "*"
+httpx = "*"
+sentry_sdk = "*"
+apscheduler = "*"
+
+[requires]
+python_version = "3.7"
