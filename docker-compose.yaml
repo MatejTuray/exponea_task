@@ -52,7 +52,6 @@ services:
       WORKERS_PER_CORE: 20
       MAX_WORKERS: 60
 
-
   grafana-db:
     image: mysql:latest
     restart: unless-stopped
@@ -63,10 +62,10 @@ services:
     volumes:
       - './folders/grafana-db:/var/lib/mysql:rw'
     environment:
-      MYSQL_USER: '${MYSQL_USER}'
-      MYSQL_DATABASE: '${MYSQL_DATABASE}'
-      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
-      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      MYSQL_USER: mysql
+      MYSQL_DATABASE: db
+      MYSQL_PASSWORD: pass
+      MYSQL_ROOT_PASSWORD: root
     networks:
       - net
 
@@ -74,7 +73,7 @@ services:
     image: grafana/grafana:latest
     restart: unless-stopped
     volumes:
-      - ./data/grafana:/var/lib/grafana
+      - ./data/grafana:/graf/grafana:rw
     depends_on:
       - grafana-db
     ports:
@@ -87,14 +86,14 @@ services:
       GF_ALERTING_EXECUTE_ALERTS: 'true'
       GF_ANALYTICS_CHECK_FOR_UPDATES: 'false'
       GF_ANALYTICS_REPORTING_ENABLED: 'false'
-      GF_SECURITY_ADMIN_USER: '${MYSQL_USER}'
-      GF_SECURITY_ADMIN_PASSWORD: '${MYSQL_PASSWORD}'
+      GF_SECURITY_ADMIN_USER: 'mysql'
+      GF_SECURITY_ADMIN_PASSWORD: 'pass'
       GF_DATABASE_HOST: 'grafana-db:3306'
-      GF_DATABASE_NAME: 'grafana'
+      GF_DATABASE_NAME: 'db'
       GF_DATABASE_TYPE: mysql
-      GF_DATABASE_PASSWORD: '${MYSQL_PASSWORD}'
-      GF_DATABASE_USER: '${MYSQL_USER}'
-      GF_EXPLORE_ENABLED: 'true'   
+      GF_DATABASE_PASSWORD: 'pass'
+      GF_DATABASE_USER:  'mysql'
+      GF_EXPLORE_ENABLED: 'true'
       GF_INSTALL_PLUGINS: grafana-piechart-panel,natel-plotly-panel,grafana-clock-panel,camptocamp-prometheus-alertmanager-datasource,briangann-datatable-panel,grafana-worldmap-panel
       GF_LOG_LEVEL: info
       GF_LOGIN_COOKIE_NAME: grafana_cheese_cake
