@@ -27,5 +27,5 @@ more @ https://github.com/tiangolo/uvicorn-gunicorn-docker#advanced-usage
 API has 2 docs endpoints, OpenApi - swagger interactive docs and Redoc available at
 
 ```json
-/api/docs && /api/cdeor
+/api/docs && /api/redoc
 ```
