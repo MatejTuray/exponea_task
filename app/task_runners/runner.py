@@ -42,7 +42,7 @@ class FirstRunner(BaseRunner):
 class SmartRunner(BaseRunner):
     def schedule_tasks(self, task_count, timeout):
         with ThreadingTimeout(timeout, swallow_exc=False) as func_timeout:
-            log.info(f"Smart runner task timeout status {func_timeout.status}")
+            log.info(f"Smart runner task timeout status {func_timeout.state}")
             futures = {}
             with ThreadPoolExecutor() as executor:
                 for item in itertools.islice(iter(self.tasks), task_count):
