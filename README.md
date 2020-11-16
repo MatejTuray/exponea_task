@@ -29,3 +29,7 @@ API has 2 docs endpoints, OpenApi - swagger interactive docs and Redoc available
 ```json
 /api/docs && /api/redoc
 ```
+
+### Misc:
+
+After deploying locally with compose, grafana is available @ localhost:3000 and prometheus datasource @ localhost:9090
