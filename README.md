@@ -6,6 +6,7 @@
 [![Codecov](https://codecov.io/gh/MatejTuray/exponea_task/branch/master/graph/badge.svg)](https://codecov.io/gh/MatejTuray/exponea_task)
 
 ### To start:
+Fill in env variables in .env example files
 
 ```bash
 git clone https://github.com/MatejTuray/exponea_task.git
