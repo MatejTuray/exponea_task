@@ -3,7 +3,9 @@ __pycache__
 .pytest_cache
 .vscode
 .coverage
-.env
+./app/.env
+folders
+data
 docs
 migrations
 

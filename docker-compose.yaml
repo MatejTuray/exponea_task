@@ -1,0 +1,114 @@
+version: "3.7"
+
+services:
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: monitoring_prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml   
+    expose:
+      - 9090
+    ports:
+      - 9090:9090 
+    networks:
+      - net   
+      
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: monitoring_node_exporter
+    restart: unless-stopped
+    expose:
+      - 9100
+
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: monitoring_cadvisor
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    expose:
+      - 8080
+
+  api:
+    container_name: exponea_api
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - "./app"
+    networks:
+      - net
+    environment:
+      WORKERS_PER_CORE: 20
+      MAX_WORKERS: 60
+
+
+  grafana-db:
+    image: mysql:latest
+    restart: unless-stopped
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "3306:3306"
+    volumes:
+      - './folders/grafana-db:/var/lib/mysql:rw'
+    environment:
+      MYSQL_USER: '${MYSQL_USER?err}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE?err}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD?err}'
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD?err}'
+    networks:
+      - net
+
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+    depends_on:
+      - grafana-db
+    ports:
+      - "3000:3000"
+    networks:
+      - net
+    links:
+      - prometheus:prometheus
+    environment:
+      GF_ALERTING_EXECUTE_ALERTS: 'true'
+      GF_ANALYTICS_CHECK_FOR_UPDATES: 'false'
+      GF_ANALYTICS_REPORTING_ENABLED: 'false'
+      GF_SECURITY_ADMIN_USER: '${MYSQL_USER?err}'
+      GF_SECURITY_ADMIN_PASSWORD: '${MYSQL_PASSWORD}'
+      GF_DATABASE_HOST: 'grafana-db:3306'
+      GF_DATABASE_NAME: 'grafana'
+      GF_DATABASE_TYPE: mysql
+      GF_DATABASE_PASSWORD: '${MYSQL_PASSWORD?err}'
+      GF_DATABASE_USER: '${MYSQL_USER?err}'
+      GF_EXPLORE_ENABLED: 'true'   
+      GF_INSTALL_PLUGINS: grafana-piechart-panel,natel-plotly-panel,grafana-clock-panel,camptocamp-prometheus-alertmanager-datasource,briangann-datatable-panel,grafana-worldmap-panel
+      GF_LOG_LEVEL: info
+      GF_LOGIN_COOKIE_NAME: grafana_cheese_cake
+      GF_SECURITY_COOKIE_SECURE: 'true'
+      GF_SECURITY_SECRET_KEY: ${GF_SECURITY_SECRET_KEY?err}         
+      GF_SERVER_ROUTER_LOGGING: 'true'
+      GF_SESSION_LIFE_TIME: 86400
+      GF_USERS_ALLOW_SIGN_UP: 'false'
+      GF_USERS_AUTO_ASSIGN_ORG: 'true'
+      GF_USERS_AUTO_ASSIGN_ORG_ROLE: 'Admin'
+      GODEBUG: netdns=go
+
+networks:
+  net:
+    driver: bridge
