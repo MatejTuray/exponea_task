@@ -12,7 +12,6 @@ from requests.exceptions import HTTPError, ReadTimeout
 from task_runners.runner import AllRunner
 from tests.test_base import BaseTest
 from utils.enums import URLList
-from utils.testing import aio_benchmark
 
 from resources.all_responses_resource import AllResponsesResource
 
