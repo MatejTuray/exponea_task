@@ -98,7 +98,7 @@ services:
       GF_LOG_LEVEL: info
       GF_LOGIN_COOKIE_NAME: grafana_cheese_cake
       GF_SECURITY_COOKIE_SECURE: 'true'
-      GF_SECURITY_SECRET_KEY: ${GF_SECURITY_SECRET_KEY}
+      GF_SECURITY_SECRET_KEY: 'keyboardcat'
       GF_SERVER_ROUTER_LOGGING: 'true'
       GF_SESSION_LIFE_TIME: 86400
       GF_USERS_ALLOW_SIGN_UP: 'false'
