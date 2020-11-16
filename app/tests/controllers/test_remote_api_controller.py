@@ -19,9 +19,7 @@ class TestRemoteApiController:
 
     @mark.it("Should return status code 200 and a json response")
     def test_get_should_succeed(self, requests_mock, caplog):
-        requests_mock.register_uri(
-            "GET", self.url, json={"time": 123}, status_code=200
-        )
+        requests_mock.register_uri("GET", self.url, json={"time": 123}, status_code=200)
         with caplog.at_level(logging.INFO):
             resp = self.cntrl.get()
         assert resp == {"time": 123}
@@ -35,7 +33,7 @@ class TestRemoteApiController:
         assert "Handled request error while processing request" in caplog.text
 
     @mark.it("Should raise general http error and log the response")
-    def test_get_should_error_and_log_reponse(self, requests_mock, caplog):
+    def test_get_should_httperror_and_log_reponse(self, requests_mock, caplog):
         requests_mock.register_uri("GET", self.url, exc=HTTPError)
         with caplog.at_level(logging.ERROR):
             self.cntrl.get()
@@ -46,15 +44,10 @@ class TestRemoteApiController:
         requests_mock.register_uri("GET", self.url, exc=Exception)
         with caplog.at_level(logging.ERROR):
             self.cntrl.get()
-        assert (
-            "Handled unspecified error while processing request" in caplog.text
-        )
+        assert "Handled unspecified error while processing request" in caplog.text
 
     @mark.it("Benchmark get")
     def test_benchmark_get(self, benchmark, requests_mock):
-        requests_mock.register_uri(
-            "GET", self.url, json={"time": 123}, status_code=200
-        )
+        requests_mock.register_uri("GET", self.url, json={"time": 123}, status_code=200)
         resp = benchmark(self.cntrl.get)
         assert resp == {"time": 123}
-        

@@ -13,9 +13,7 @@ def error_interface(f):
             return e
 
         except Exception as e:
-            log.error(
-                f"Handled unspecified error while processing request: {e}"
-            )
+            log.error(f"Handled unspecified error while processing request: {e}")
             return e
 
     return decorated

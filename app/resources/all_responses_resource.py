@@ -32,5 +32,6 @@ class AllResponsesResource(BaseResource):
         exponea_cntrl = RemoteApiController(
             url=URLList.EXPONEA_TEST_SERVER.value, timeout=timeout
         )
-        return AllResponsesResourceManager().handle_get(timeout, self.runners, [exponea_cntrl])       
-       
+        return AllResponsesResourceManager().handle_get(
+            timeout, self.runners, [exponea_cntrl]
+        )

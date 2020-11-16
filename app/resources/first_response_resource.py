@@ -1,4 +1,6 @@
-from managers.resource_managers.first_response_resource_manager import FirstResponseResourceManager
+from managers.resource_managers.first_response_resource_manager import (
+    FirstResponseResourceManager,
+)
 from controllers.remoteApiController import RemoteApiController
 from fastapi import Depends, Request
 from fastapi_restful import set_responses
@@ -31,4 +33,3 @@ class FirstResponseResource(BaseResource):
         return FirstResponseResourceManager().handle_get(
             timeout, self.runners, [exponea_cntrl]
         )
-

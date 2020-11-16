@@ -36,20 +36,14 @@ def create_app():
     )
 
     api = Api(app, prefix="/api")
-    api.add_resource(
-        AllResponsesResource(), "/all", tags=["Exponea Test Server"]
-    )
-    api.add_resource(
-        FirstResponseResource(), "/first", tags=["Exponea Test Server"]
-    )
+    api.add_resource(AllResponsesResource(), "/all", tags=["Exponea Test Server"])
+    api.add_resource(FirstResponseResource(), "/first", tags=["Exponea Test Server"])
     api.add_resource(
         ThresholdResponsesResource(),
         "/within-timeout",
         tags=["Exponea Test Server"],
     )
-    api.add_resource(
-        SmartResponseResource(), "/smart", tags=["Exponea Test Server"]
-    )
+    api.add_resource(SmartResponseResource(), "/smart", tags=["Exponea Test Server"])
     simplify_operation_ids(app)
     add_timing_middleware(app, record=log.info, prefix="/api")
     Instrumentator().instrument(app).expose(app)
@@ -69,4 +63,3 @@ sentry_sdk.init(
 )
 
 app = SentryAsgiMiddleware(app)
-

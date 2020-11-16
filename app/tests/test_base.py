@@ -23,4 +23,3 @@ class TestBaseApp:
             resp = await client.get("/")
             assert resp.status_code == 200
             assert resp.json() == {"message": "Pong!"}
-

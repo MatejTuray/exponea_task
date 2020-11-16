@@ -30,9 +30,7 @@ class FirstRunner(BaseRunner):
                 for item in itertools.islice(iter(self.tasks), task_count)
             }
             while futures:
-                done, _ = wait(
-                    futures, timeout=timeout, return_when=FIRST_COMPLETED
-                )
+                done, _ = wait(futures, timeout=timeout, return_when=FIRST_COMPLETED)
 
                 for fut in done:
                     futures.pop(fut)
@@ -44,12 +42,11 @@ class FirstRunner(BaseRunner):
 class SmartRunner(BaseRunner):
     def schedule_tasks(self, task_count, timeout):
         with ThreadingTimeout(timeout, swallow_exc=False) as func_timeout:
+            log.info(f"Smart runner task timeout status {func_timeout.status}")
             futures = {}
             with ThreadPoolExecutor() as executor:
                 for item in itertools.islice(iter(self.tasks), task_count):
-                    futures.update(
-                        {executor.submit(item["task"]): item["task"]}
-                    )
+                    futures.update({executor.submit(item["task"]): item["task"]})
                 self.tasks = []
                 log.info(futures)
                 while futures:
@@ -73,9 +70,7 @@ class AllRunner(BaseRunner):
                 for item in itertools.islice(iter(self.tasks), task_count)
             }
             while futures:
-                done, _ = wait(
-                    futures, timeout=timeout, return_when=ALL_COMPLETED
-                )
+                done, _ = wait(futures, timeout=timeout, return_when=ALL_COMPLETED)
 
                 for fut in done:
                     futures.pop(fut)

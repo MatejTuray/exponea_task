@@ -14,6 +14,4 @@ class SourceTypes(enum.Enum):
 
 
 class URLList(enum.Enum):
-    EXPONEA_TEST_SERVER = (
-        "https://exponea-engineering-assignment.appspot.com/api/work"
-    )
+    EXPONEA_TEST_SERVER = "https://exponea-engineering-assignment.appspot.com/api/work"

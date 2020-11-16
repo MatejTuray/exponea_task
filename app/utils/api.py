@@ -21,14 +21,10 @@ class Api:
         self.prefix = prefix
         self.app = app
 
-    def add_resource(
-        self, resource: Resource, *urls: str, **kwargs: Any
-    ) -> None:
+    def add_resource(self, resource: Resource, *urls: str, **kwargs: Any) -> None:
         router = APIRouter()
         _cbv(router, type(resource), *urls, instance=resource)
-        self.app.include_router(
-            router, prefix=self.prefix, tags=kwargs.get("tags")
-        )
+        self.app.include_router(router, prefix=self.prefix, tags=kwargs.get("tags"))
 
 
 def take_init_parameters(cls: Any) -> Any:
@@ -41,7 +37,7 @@ def set_responses(
     status_code: int = 200,
     responses: Dict[str, Any] = None,
     summary: str = "Default summary",
-    **kwargs: Any
+    **kwargs: Any,
 ) -> Any:
     def decorator(func: Any) -> Any:
         def get_responses() -> Tuple[
