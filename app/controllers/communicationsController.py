@@ -1,11 +1,6 @@
-import abc
 import requests
-from app.interfaces.errorInterface import error_interface
-
-class AbstractRequestController(abc.ABCMeta):
-    @abc.abstractstaticmethod
-    def query(method, url, timeout, data):
-        raise NotImplementedError
+from interfaces.errorInterface import error_interface
+from logger import logRoundtrip
 
 
 class CommunicationController:
@@ -16,8 +11,10 @@ class CommunicationController:
 
     @error_interface
     def get(self):
-        resp = requests.get(url=url, timeout=self.timeout)
-        resp.raise_for_status()
-        if resp.status_code == 200:
-            data = resp.json()
-            return data
+        with requests.Session() as session:
+            session.hooks["response"].append(logRoundtrip)
+            resp = session.get(url=self.url, timeout=self.timeout)
+            resp.raise_for_status()
+            if resp.status_code == 200:
+                data = resp.json()
+                return data

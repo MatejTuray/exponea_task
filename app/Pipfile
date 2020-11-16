@@ -4,7 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-black = "==18.9b0"
+black = "==20.8b1"
 flake8 = "*"
 
 [packages]
@@ -16,11 +16,21 @@ codecov = "*"
 python-dotenv = "*"
 fastapi = "*"
 fastapi-restful = "*"
+fastapi-utils = "*"
 uvicorn = "*"
 pytest-asyncio = "*"
-httpx = "*"
+async_asgi_testclient = "*"
 sentry_sdk = "*"
-apscheduler = "*"
+json_log_formatter = "*"
+python_dotenv = "*"
+stopit = "*"
+prometheus_client = "*"
+prometheus-fastapi-instrumentator = "*"
+asgi-ratelimit = "*"
+pre-commit = "*"
+requests-mock = "*"
+pytest-benchmark = "*"
+pytest-it = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"

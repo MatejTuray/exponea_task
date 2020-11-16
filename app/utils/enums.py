@@ -1,5 +1,5 @@
 import enum
-from app.interfaces.runnerFactory import ExponeaRequestRunnerFactory
+from task_runners.runnerCreator import ExponeaRequestRunnerFactory
 
 
 class TaskTypes(enum.Enum):

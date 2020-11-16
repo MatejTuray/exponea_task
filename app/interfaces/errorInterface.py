@@ -9,17 +9,13 @@ def error_interface(f):
         try:
             return f(self, *args, **kwargs)
         except requests.exceptions.RequestException as e:
-            log.error(
-                "Handled request error while processing request: {0}".format(e)
-            )
-            raise e
+            log.error(f"Handled request error while processing request: {e}")
+            return e
 
         except Exception as e:
             log.error(
-                "Handled unspecified error while processing request: {0}".format(
-                    e
-                )
+                f"Handled unspecified error while processing request: {e}"
             )
-            raise e
+            return e
 
     return decorated
