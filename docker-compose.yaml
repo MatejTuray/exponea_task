@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.3"
 
 services:
 
@@ -14,8 +14,6 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml   
     expose:
       - 9090
-    ports:
-      - 9090:9090 
     networks:
       - net   
       
@@ -65,10 +63,10 @@ services:
     volumes:
       - './folders/grafana-db:/var/lib/mysql:rw'
     environment:
-      MYSQL_USER: '${MYSQL_USER?err}'
-      MYSQL_DATABASE: '${MYSQL_DATABASE?err}'
-      MYSQL_PASSWORD: '${MYSQL_PASSWORD?err}'
-      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD?err}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
     networks:
       - net
 
@@ -89,19 +87,19 @@ services:
       GF_ALERTING_EXECUTE_ALERTS: 'true'
       GF_ANALYTICS_CHECK_FOR_UPDATES: 'false'
       GF_ANALYTICS_REPORTING_ENABLED: 'false'
-      GF_SECURITY_ADMIN_USER: '${MYSQL_USER?err}'
+      GF_SECURITY_ADMIN_USER: '${MYSQL_USER}'
       GF_SECURITY_ADMIN_PASSWORD: '${MYSQL_PASSWORD}'
       GF_DATABASE_HOST: 'grafana-db:3306'
       GF_DATABASE_NAME: 'grafana'
       GF_DATABASE_TYPE: mysql
-      GF_DATABASE_PASSWORD: '${MYSQL_PASSWORD?err}'
-      GF_DATABASE_USER: '${MYSQL_USER?err}'
+      GF_DATABASE_PASSWORD: '${MYSQL_PASSWORD}'
+      GF_DATABASE_USER: '${MYSQL_USER}'
       GF_EXPLORE_ENABLED: 'true'   
       GF_INSTALL_PLUGINS: grafana-piechart-panel,natel-plotly-panel,grafana-clock-panel,camptocamp-prometheus-alertmanager-datasource,briangann-datatable-panel,grafana-worldmap-panel
       GF_LOG_LEVEL: info
       GF_LOGIN_COOKIE_NAME: grafana_cheese_cake
       GF_SECURITY_COOKIE_SECURE: 'true'
-      GF_SECURITY_SECRET_KEY: ${GF_SECURITY_SECRET_KEY?err}         
+      GF_SECURITY_SECRET_KEY: ${GF_SECURITY_SECRET_KEY}
       GF_SERVER_ROUTER_LOGGING: 'true'
       GF_SESSION_LIFE_TIME: 86400
       GF_USERS_ALLOW_SIGN_UP: 'false'
