@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7a21441bb77d1e27a01b4b9fbad4abe4be363cfd8d9aa8e91a7f5ce2ec6383f4"
+            "sha256": "8976a9b95f435619c06022b4dc9060a725fe19a3473c5aec6d49fffe1cf3c048"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -492,6 +492,22 @@
             ],
             "version": "==1.7.2"
         },
+        "pygal": {
+            "hashes": [
+                "sha256:27abab93cbc31e21f3c6bdecc05bda6cd3570cbdbd8297b7caa6904051b50d72",
+                "sha256:9204f05380b02a8a32f9bf99d310b51aa2a932cba5b369f7a4dc3705f0a4ce83"
+            ],
+            "index": "pypi",
+            "version": "==2.4.0"
+        },
+        "pygaljs": {
+            "hashes": [
+                "sha256:0b71ee32495dcba5fbb4a0476ddbba07658ad65f5675e4ad409baf154dec5111",
+                "sha256:d75e18cb21cc2cda40c45c3ee690771e5e3d4652bf57206f20137cf475c0dbe8"
+            ],
+            "index": "pypi",
+            "version": "==1.0.2"
+        },
         "pyparsing": {
             "hashes": [
                 "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1",
@@ -537,6 +553,14 @@
             ],
             "index": "pypi",
             "version": "==0.1.4"
+        },
+        "pytest-mock": {
+            "hashes": [
+                "sha256:024e405ad382646318c4281948aadf6fe1135632bea9cc67366ea0c4098ef5f2",
+                "sha256:a4d6d37329e4a893e77d9ffa89e838dd2b45d5dc099984cf03c703ac8411bb82"
+            ],
+            "index": "pypi",
+            "version": "==3.3.1"
         },
         "python-dotenv": {
             "hashes": [

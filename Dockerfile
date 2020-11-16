@@ -6,4 +6,4 @@ WORKDIR /app
 
 RUN pip install -r requirements.txt
 
-RUN pytest --cov=app tests/
+RUN pytest --it --cov=. tests/ --benchmark-histogram

@@ -31,6 +31,9 @@ pre-commit = "*"
 requests-mock = "*"
 pytest-benchmark = "*"
 pytest-it = "*"
+pygal = "*"
+pygaljs = "*"
+pytest-mock = "*"
 
 [requires]
 python_version = "3.8"

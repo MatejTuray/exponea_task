@@ -1,5 +1,5 @@
 import enum
-from task_runners.runnerCreator import ExponeaRequestRunnerFactory
+from task_runners.runner_creators import ExponeaRequestRunnerCreator
 
 
 class TaskTypes(enum.Enum):
@@ -10,7 +10,7 @@ class TaskTypes(enum.Enum):
 
 
 class SourceTypes(enum.Enum):
-    EXPONEA = ExponeaRequestRunnerFactory
+    EXPONEA = ExponeaRequestRunnerCreator
 
 
 class URLList(enum.Enum):

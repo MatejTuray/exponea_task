@@ -34,6 +34,7 @@ def create_app():
         allow_methods=["GET"],
         allow_headers=["*"],
     )
+
     api = Api(app, prefix="/api")
     api.add_resource(
         AllResponsesResource(), "/all", tags=["Exponea Test Server"]
@@ -55,9 +56,17 @@ def create_app():
     return app
 
 
+app = create_app()
+
+
+@app.get("/")
+async def root():
+    return {"message": "Pong!"}
+
+
 sentry_sdk.init(
     dsn=os.getenv("SENTRY_DSN"), traces_sample_rate=1.0, attach_stacktrace=True
 )
 
-app = SentryAsgiMiddleware(create_app())
+app = SentryAsgiMiddleware(app)
 

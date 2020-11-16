@@ -1,16 +1,18 @@
 from typing import List
 
-from controllers.communicationsController import CommunicationController
+from controllers.remoteApiController import RemoteApiController
+from managers.resource_managers.all_responses_resource_manager import (
+    AllResponsesResourceManager,
+)
 from fastapi import Depends, Request
 from fastapi_restful import set_responses
 from interfaces.taskInterface import add_runner
 from logger import log_request
 from parsers.output.time_parser import TimeOutSingle
-from stopit import ThreadingTimeout
 from utils.convert_from_ms import convert_from_ms
 from utils.enums import SourceTypes, TaskTypes, URLList
-from utils.response_models import TimeoutErrorModel, timeout_error
-
+from utils.response_models import TimeoutErrorModel
+from logger import log
 from resources.base import BaseResource
 
 
@@ -26,18 +28,9 @@ class AllResponsesResource(BaseResource):
         "returns the result as an array. If timeout is reached before all requests finish, or none of "
         "the responses were successful, the endpoint should return an 504 Timeout error.",
     )
-    def get(self, request: Request, timeout: float = Depends(convert_from_ms)):       
-        with ThreadingTimeout(timeout) as ctx_timeout:
-            exponea_cntrl = CommunicationController(
-                url=URLList.EXPONEA_TEST_SERVER.value, timeout=timeout
-            )
-            runner = self.runners[0]
-            runner.push_task(exponea_cntrl.get, [None], 3)
-            res = runner.schedule_tasks(3, timeout)
-            response = [item for item in res if type(item) == dict]
-        if ctx_timeout.state == ctx_timeout.TIMED_OUT:
-            return timeout_error
-        elif ctx_timeout.state == ctx_timeout.EXECUTED:
-            if not response:
-                return timeout_error
-            return response
+    def get(self, request: Request, timeout: float = Depends(convert_from_ms)):
+        exponea_cntrl = RemoteApiController(
+            url=URLList.EXPONEA_TEST_SERVER.value, timeout=timeout
+        )
+        return AllResponsesResourceManager().handle_get(timeout, self.runners, [exponea_cntrl])       
+       

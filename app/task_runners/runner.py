@@ -5,7 +5,7 @@ from concurrent.futures import (
     ThreadPoolExecutor,
     wait,
 )
-from interfaces.runnerInterface import AbstractRunner
+from task_runners.abstract_runners import AbstractRunner
 from logger import log
 from stopit import ThreadingTimeout
 

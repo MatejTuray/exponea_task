@@ -3,7 +3,7 @@ from interfaces.errorInterface import error_interface
 from logger import logRoundtrip
 
 
-class CommunicationController:
+class RemoteApiController:
     def __init__(self, url, timeout):
         super().__init__()
         self.timeout = timeout
