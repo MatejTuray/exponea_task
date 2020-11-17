@@ -1,4 +1,4 @@
-# exponea_task
+# Exponea_task
 
 [![Build Status](https://travis-ci.com/MatejTuray/exponea_task.svg?branch=master)](https://travis-ci.com/MatejTuray/exponea_task)
 ![CI](https://img.shields.io/badge/Travis-red.svg?style=flat&logo=travis)
